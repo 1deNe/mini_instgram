@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -75,14 +77,10 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'mysite_db',    
-        'USER': 'myuser',       
-        'PASSWORD': 'mypassword',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
+    'default': dj_database_url.config(
+        # Егер Render-де болсақ, оның базасын алады, әйтпесе локальді базаны қолданады
+        default=os.environ.get('DATABASE_URL', 'postgresql://admin:zUZV5DnzRfXKVngzgFY7GUUkvHWzDtqS@dpg-d77pti0ule4c73df3fd0-a/instagram_db_9tcu')
+    )
 }
 
 
